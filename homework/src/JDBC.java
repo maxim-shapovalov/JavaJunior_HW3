@@ -16,19 +16,15 @@ public class JDBC {
             selectAllPerson(connection);
 
             int personId = 1;
-            System.out.println("Person # " + personId + " находится в департементе " + nameDepartmentByIdPerson(connection, personId));
-            System.out.println("Имя сотрудника и его департамент");
+            System.out.println("Person # " + personId + " is in department " + nameDepartmentByIdPerson(connection, personId));
+            System.out.println("Person name and his department");
             personAndDepartment(connection);
-            System.out.println("Департамент и его сотрудники");
+            System.out.println("Department and emploeers");
             departmentNumberAndAllPerson(connection);
             objectPersonAndDepartments(connection);
             objectDepartmentAndListPersons(connection);
 
 
-            //selectData(connection);
-            //updateDate(connection);
-            //String age = "55";
-            //System.out.println("Person c возоастом 55: " + selectNameByAge(connection,"55"));
 
         } catch (SQLException e) {
             System.err.println("Во время подключения произошла ошибка: " + e.getMessage());
@@ -115,7 +111,7 @@ public class JDBC {
 
             }
             int insertCount = statement.executeUpdate(insert.toString());
-            System.out.println("Вставлено строк: " + insertCount);
+            System.out.println("Insert strings: " + insertCount);
         }
     }
 
@@ -126,7 +122,7 @@ public class JDBC {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 int age = resultSet.getByte("age");
-                System.out.println("Найдена строка: [id = " + id + ", name = " + name + ", age = " + age + "]");
+                System.out.println("Found string: [id = " + id + ", name = " + name + ", age = " + age + "]");
             }
 
         }
@@ -156,7 +152,7 @@ public class JDBC {
     private static String nameDepartmentByIdPerson(Connection connection, int id) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("Select departmentId from person where id =  " + id);
-            if (!resultSet.next()) throw new NoSuchElementException("Person # " + id + " не найден");
+            if (!resultSet.next()) throw new NoSuchElementException("Person # " + id + " not found");
             String dp = resultSet.getString("departmentId");
             ResultSet resultSet1 = statement.executeQuery("select name from department where id =" + dp);
             if (!resultSet1.next()) throw new NoSuchElementException("Department # " + dp + " не найден");
@@ -175,7 +171,7 @@ public class JDBC {
                 String dp = resultSet.getString("departmentId");
                 try (Statement innerStatment = connection.createStatement()) {
                     ResultSet resultSet1 = innerStatment.executeQuery("select name from department where id = " + dp);
-                    if (!resultSet1.next()) throw new NoSuchElementException("У сотрудника нет департамента");
+                    if (!resultSet1.next()) throw new NoSuchElementException("This is not department for this emploee");
                     String nameDp = resultSet1.getString("name");
                     personAndDepartment.put(name, nameDp);
                 }
