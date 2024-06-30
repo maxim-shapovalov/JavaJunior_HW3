@@ -27,7 +27,7 @@ public class JDBC {
 
 
         } catch (SQLException e) {
-            System.err.println("Во время подключения произошла ошибка: " + e.getMessage());
+            System.err.println("Connecting error: " + e.getMessage());
         }
     }
 
